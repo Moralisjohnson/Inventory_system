@@ -16,7 +16,7 @@ import Data.List
 
 historicoPorItem :: String -> [LogEntry] -> [LogEntry]
 historicoPorItem itemId logs =
-    filter (\logElemento -> elem itemId pegarDetalhesId (detalhe logElemento)) logs
+    filter (\logElemento -> elem itemId (pegarDetalhesId (detalhe logElemento))) logs
   where -- Usa função lambda com filter, mais simples que a versão anterior
     pegarDetalhesId = words . map toLower
     
