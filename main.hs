@@ -121,12 +121,20 @@ loop itemID invAtual logsAtuais = do
                 return Sair
 
             | cmd `elem` ["1", "add", "adicionar"] -> do
-                novoItem <- iOconstruirItem itemID -- ItemID e global
+                novoItem <- iOconstruirItem itemID
                 tempo <- getCurrentTime
                 let resultado = manipularIncremento novoItem invAtual tempo
                 case resultado of
-                    Right res -> return (AcaoSucesso res)
-                    Left logF -> return (AcaoFalha logF)
+                    Right res -> do
+                        putStrLn "\nItem adicionado com sucesso!"
+                        return (AcaoSucesso res)
+
+                    Left logF -> do
+                        putStrLn "\nFalha ao executar operação!"
+                        putStrLn ("Motivo: " ++ show logF)
+                        return (AcaoFalha logF)
+                        
+
 
             | cmd `elem` ["2", "remove", "remover"] -> do
                 mostrarInventario invAtual
@@ -134,8 +142,15 @@ loop itemID invAtual logsAtuais = do
                 tempo <- getCurrentTime
                 let resultado = removerItem itemIDrem quantidade invAtual tempo
                 case resultado of
-                    Right res -> return (AcaoSucesso res)
-                    Left logF -> return (AcaoFalha logF)
+                    Right res -> do
+                        putStrLn "\nItem removido com sucesso!"
+                        return (AcaoSucesso res)
+
+                    Left logF -> do
+                        putStrLn "\nFalha ao executar operação!"
+                        putStrLn ("Motivo: " ++ show logF)
+                        return (AcaoFalha logF)
+
 
             | cmd `elem` ["3", "view", "ver"] -> do
                 mostrarInventario invAtual
